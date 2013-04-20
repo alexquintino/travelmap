@@ -5,7 +5,7 @@ TRIP = {
 	
 		_.each(labels, function(label) {
 			html = _.template("<div class=\"poi-label\"><h1 data--100-bottom-top=\"opacity:1\" data-bottom-bottom=\"opacity:0\" ><%= label %></h1></div>",{label: label});
-			element.prepend(html);	
+			element.append(html);
 		});
 	},
 	initMap : function(mapElem,callback) {

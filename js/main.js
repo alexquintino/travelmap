@@ -37,7 +37,7 @@ var drawOverlay = function() {
 
 
 
-TRIP.initDom($(".foreground"));
+TRIP.initDom($("body"));
 TRIP.initMap($("#map_canvas"));
 
 
@@ -50,5 +50,4 @@ $(function() {
 	
 	$("#start").css('height',$(window).height());
 	$(".poi-label").css('height',$(window).height());
-	$("html, body").animate({ scrollTop: $(document).height() }, 0);	
 });
