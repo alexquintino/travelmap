@@ -93,41 +93,18 @@ textarea {
    Author's custom styles
    ========================================================================== */
 
-/*body {
-	background-color: #A2E5D2
-}
-
-.background {
-  fill: none;
-  pointer-events: all;
-}
-
-#countries {
-  fill: #72EB63;
-  stroke: #78684E;
-  stroke-width: 1px;
-}
-
-.poi {
-	fill: red;
-	stroke-width: 0px;
-}*/
-
-
-/*body { height: 10000px}*/
-/*html, body, #fix, #map_canvas { height:100%; margin: 0; padding:0}*/
 html, body {
-    height: 10000px;
+    height: 100%;
 }
-
 #start {
 	background-color: grey;
 	color:white;
+    height: 100%;
 }
 
-h1 {
-    margin: 0px;
-    padding: 0px;
+#start h1 {
+    margin: 0;
+    padding: 0;
 }
 
 #map_canvas {
@@ -147,6 +124,15 @@ h1 {
     width: 100%;
     height: 100%;
     z-index: -1;
+}
+
+.poi-label {
+    position: relative;
+    padding: 2em;
+    background-color: #222222;
+    color: white;
+    float: left;
+    clear:both;
 }
 
 

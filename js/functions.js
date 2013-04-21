@@ -4,7 +4,7 @@ TRIP = {
 		var labels = ["SAN JOSÉ","LA FORTUNA", "TAMARINDO", "ISLA DE OMETEPE"];
 	
 		_.each(labels, function(label) {
-			html = _.template("<div class=\"poi-label\"><h1 data--100-bottom-top=\"opacity:1\" data-bottom-bottom=\"opacity:0\" ><%= label %></h1></div>",{label: label});
+			html = _.template("<div class=\"poi-label\" data-bottom-top=\"left:-50%\" data-100-top=\"left:0%\"><h1><%= label %></h1></div>",{label: label});
 			element.append(html);
 		});
 	},
@@ -63,8 +63,10 @@ TRIP = {
 	    	.attr('stroke-width',2);
 	},
 	updateMapPosition : function(currentTop) {
-		windowHeight = $(window).height();
-		poiIndex = Math.floor((currentTop+windowHeight) / windowHeight);
-		console.log(poiIndex);
+//		windowHeight = $(window).height();
+//		poiIndex = Math.floor((currentTop+windowHeight) / windowHeight);
+//		console.log(poiIndex);
+//        console.log($(".rendered").text())
+        console.log(currentTop);
 	}
 };

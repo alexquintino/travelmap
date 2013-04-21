@@ -1,4 +1,3 @@
-var mapOverlay,googleMapProjection,map;
 
 TRIP.POISOrder = [
 	POIS.costaRica.sanJose,
@@ -42,12 +41,12 @@ TRIP.initMap($("#map_canvas"));
 
 
 $(function() {
-	// initPaths();
-	var s = skrollr.init({
-		render : scrollCallback,
-		forceHeight : false
-	});
-	
-	$("#start").css('height',$(window).height());
-	$(".poi-label").css('height',$(window).height());
+    $(".poi-label").css("margin-top",$(window).height())
+
+//    var s = skrollr.init({
+//		render : scrollCallback,
+//		forceHeight : true,
+//        smoothScrolling: true
+//	});
+
 });
