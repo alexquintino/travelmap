@@ -6,10 +6,8 @@ TRIP.POISOrder = [
   POIS.costaRica.tamarindo,
   POIS.costaRica.PenasBlancas]
 
-TRIP.numberOfPOIS = TRIP.POISOrder.length
-
-scrollCallback = (props) ->
-  TRIP.updateMapPosition(props.curTops)
+TRIP.scrollCallback = (props) ->
+  TRIP.map.throttledUpdatePosition(props.curTop)
 
 drawPOI = (poi) ->
   coordinates = googleMapProjection([poi.lon,poi.lat])
@@ -21,17 +19,22 @@ drawPOI = (poi) ->
 
 TRIP.initPaths = ->
   if $("#mapOverlay path").size() == 0
-    TRIP.drawPath(POIS.costaRica.sanJose,POIS.costaRica.laFortuna);
-    TRIP.drawPath(POIS.costaRica.laFortuna,POIS.costaRica.tamarindo);
+    TRIP.map.drawPath(POIS.costaRica.sanJose,POIS.costaRica.laFortuna);
+    TRIP.map.drawPath(POIS.costaRica.laFortuna,POIS.costaRica.tamarindo);
 
 TRIP.initDom($("body"));
-TRIP.initMap($("#map_canvas"));
+TRIP.map.init($("#map_canvas"));
 
 $ ->
   $(".poi-label").css("margin-top",$(window).height())
+  TRIP.scrolling.startingPoint = $(window).height()
+  TRIP.scrolling.spaceBetweenPOI = $(window).height()
+  TRIP.scrolling.POIHeight = $(".poi-label").first().height()
 
-#  s = skrollr.init {
-#    render : scrollCallback,
-#    forceHeight : true,
-#    smoothScrolling: true
-#    }
+  throttled = _.throttle(TRIP.scrollCallback,100)
+
+  s = skrollr.init {
+    render : throttled,
+    forceHeight : true,
+    smoothScrolling: true
+    }
