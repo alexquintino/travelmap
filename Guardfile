@@ -2,3 +2,4 @@
 # More info at https://github.com/guard/guard#readme
 
 guard 'coffeescript', :input => 'js'
+guard 'coffeescript', :input => 'test/spec'
