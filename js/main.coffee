@@ -7,7 +7,7 @@ TRIP.POISOrder = [
   POIS.costaRica.PenasBlancas]
 
 TRIP.scrollCallback = (props) ->
-  currentPOIIndex = TRIP.pois.calculateCurrentPOIIndex(props.curTop,TRIP.scrolling.currentPOIIndex,TRIP.scrolling.startingPoint,TRIP.scrolling.spaceBetweenPOI,TRIP.scrolling.POIHeight)
+  currentPOIIndex = TRIP.pois.calculateCurrentPOIIndex(props.curTop,TRIP.scrolling.settings)
   TRIP.map.throttledUpdatePosition(currentPOIIndex)
 
 drawPOI = (poi) ->
@@ -27,10 +27,10 @@ TRIP.initDom($("body"));
 TRIP.map.init($("#map_canvas"));
 
 $ ->
-  $(".poi-label").css("margin-top",$(window).height())
-  TRIP.scrolling.startingPoint = $(window).height()
-  TRIP.scrolling.spaceBetweenPOI = $(window).height()
-  TRIP.scrolling.POIHeight = $(".poi-label").first().height()
+
+#  $(".poi-label").css("padding-top",$(window).height())
+  TRIP.scrolling.settings.startingPoint = $(window).height()
+  TRIP.scrolling.settings.POIHeight = $(".poi-label").first().height()
 
   throttled = _.throttle(TRIP.scrollCallback,100)
 

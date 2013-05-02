@@ -1,8 +1,8 @@
 window.TRIP = {
   scrolling :
-    startingPoint : 0
-    spaceBetweenPOI : 0
-    currentPOIIndex : 0
+    settings:
+      startingPoint : 0
+      POIHeight : 0
 
   initDom : (element) ->
     labels = ["SAN JOSÉ","LA FORTUNA", "TAMARINDO", "ISLA DE OMETEPE"]
