@@ -7,7 +7,8 @@ TRIP.POISOrder = [
   POIS.costaRica.PenasBlancas]
 
 TRIP.scrollCallback = (props) ->
-  TRIP.map.throttledUpdatePosition(props.curTop)
+  currentPOIIndex = TRIP.pois.calculateCurrentPOIIndex(props.curTop,TRIP.scrolling.currentPOIIndex,TRIP.scrolling.startingPoint,TRIP.scrolling.spaceBetweenPOI,TRIP.scrolling.POIHeight)
+  TRIP.map.throttledUpdatePosition(currentPOIIndex)
 
 drawPOI = (poi) ->
   coordinates = googleMapProjection([poi.lon,poi.lat])

@@ -10,11 +10,4 @@ window.TRIP = {
       html = _.template("<div class=\"poi-label\" data-bottom-top=\"opacity:0\" data-100-top=\"opacity:1\"><h1><%= label %></h1></div>",{label: label})
       element.append(html);
 
-
-  calculateCurrentPOIIndex: (scrollTop, currentPOIIndex, startingPoint, spaceBetweenPOI, POIHeight) ->
-    adjustedScrollTop = scrollTop - startingPoint
-    acumulatedPOIHeight = POIHeight*currentPOIIndex
-    adjustedScrollTop / (spaceBetweenPOI + acumulatedPOIHeight)
-
-
 }

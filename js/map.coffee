@@ -1,7 +1,7 @@
 window.TRIP.map  = {
 
-  throttledUpdatePosition : (currentTop) ->
-    curPOIIndex = TRIP.calculateCurrentPOIIndex(currentTop,TRIP.scrolling.currentPOIIndex,TRIP.scrolling.startingPoint,TRIP.scrolling.spaceBetweenPOI,TRIP.scrolling.POIHeight)
+  throttledUpdatePosition : (curPOIIndex) ->
+
     if curPOIIndex >= 0
       TRIP.scrolling.currentPOIIndex = Math.floor(curPOIIndex)
       nextCoords = @calculateNextCoordinates(curPOIIndex, TRIP.POISOrder)
