@@ -1,11 +1,17 @@
 (function() {
   window.TRIP.pois = {
-    calculateCurrentPOIIndex: function(scrollTop, currentPOIIndex, startingPoint, spaceBetweenPOI, POIHeight) {
-      var acumulatedPOIHeight, adjustedScrollTop;
+    calculateCurrentPOIIndex: function(scrollTop, settings) {
+      var POIHeight, POIIndex, adjustedScrollTop, startingPoint;
 
+      startingPoint = settings.startingPoint;
+      POIHeight = settings.POIHeight;
       adjustedScrollTop = scrollTop - startingPoint;
-      acumulatedPOIHeight = POIHeight * currentPOIIndex;
-      return adjustedScrollTop / (spaceBetweenPOI + acumulatedPOIHeight);
+      POIIndex = adjustedScrollTop / POIHeight;
+      if (POIIndex < 0) {
+        return 0;
+      } else {
+        return POIIndex;
+      }
     }
   };
 

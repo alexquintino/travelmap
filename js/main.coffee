@@ -16,7 +16,7 @@ drawPOI = (poi) ->
     .attr('cx', coordinates[0])
     .attr('cy', coordinates[1])
     .attr('r', 5)
-    .attr('class',"poi")
+    .attr('class',"map-poi")
 
 TRIP.initPaths = ->
   if $("#mapOverlay path").size() == 0
@@ -28,7 +28,7 @@ TRIP.map.init($("#map_canvas"));
 
 $ ->
 
-#  $(".poi-label").css("padding-top",$(window).height())
+  $(".poi").css("padding-top",$(window).height())
   TRIP.scrolling.settings.startingPoint = $(window).height()
   TRIP.scrolling.settings.POIHeight = $(".poi-label").first().height()
 

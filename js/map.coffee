@@ -1,29 +1,43 @@
 window.TRIP.map  = {
 
   throttledUpdatePosition : (curPOIIndex) ->
-
     if curPOIIndex >= 0
       TRIP.scrolling.currentPOIIndex = Math.floor(curPOIIndex)
-      nextCoords = @calculateNextCoordinates(curPOIIndex, TRIP.POISOrder)
-      TRIP._map.panTo(nextCoords)
+      currentPOI = @currentPOI(curPOIIndex,TRIP.POISOrder)
+      nextPOI = @nextPOI(curPOIIndex,TRIP.POISOrder)
+      percentageFromCurrentToNextPOI = @percentageFromCurrentToNextPOI(curPOIIndex,TRIP.POISOrder)
+      nextCoords = @calculateNextCoordinates(percentageFromCurrentToNextPOI, currentPOI, nextPOI)
+      nextGoogleCords = new google.maps.LatLng(nextCoords.lat,nextCoords.lon)
+      TRIP._map.panTo(nextGoogleCords)
 
-#  updatePosition :
-#    _.throttle(@throttledUpdatePosition,1)
+  currentPOI : (POIIndex,POIList) ->
+    currentPOIIndexFloored = Math.floor(POIIndex)
+    if currentPOIIndexFloored >= POIList.length
+      _.last(POIList)
+    else
+      POIList[currentPOIIndexFloored]
 
-  calculateNextCoordinates : (currentPOIIndex, POIList) ->
-    currentPOIIndexFloored = Math.floor(currentPOIIndex)
-    percentageToNextPOI = currentPOIIndex - currentPOIIndexFloored
+  nextPOI : (POIIndex,POIList) ->
+    currentPOIIndexFloored = Math.floor(POIIndex)
+    if currentPOIIndexFloored + 1 >= POIList.length
+      _.last(POIList)
+    else
+      POIList[currentPOIIndexFloored + 1]
 
-    currentPOI = POIList[currentPOIIndexFloored]
-    nextPOI = POIList[currentPOIIndexFloored + 1]
+  percentageFromCurrentToNextPOI : (POIIndex) ->
+    POIIndexFloored = Math.floor(POIIndex)
+    if POIIndex == POIIndexFloored
+      1
+    else
+      POIIndex - POIIndexFloored
 
-    nextLatIncrement = (nextPOI.lat - currentPOI.lat) * percentageToNextPOI
-    nextLonIncrement = (nextPOI.lon - currentPOI.lon) * percentageToNextPOI
+  calculateNextCoordinates : (percentageFromCurrentToNextPOI, currentPOI, nextPOI) ->
+    nextLatIncrement = (nextPOI.lat - currentPOI.lat) * percentageFromCurrentToNextPOI
+    nextLonIncrement = (nextPOI.lon - currentPOI.lon) * percentageFromCurrentToNextPOI
 
     nextLat = currentPOI.lat + nextLatIncrement
     nextLon = currentPOI.lon + nextLonIncrement
-    new google.maps.LatLng(nextLat,nextLon)
-
+    {lat:nextLat, lon:nextLon}
 
   init : (mapElem) ->
     options = {
