@@ -7,8 +7,8 @@
       POIHeight = settings.POIHeight;
       adjustedScrollTop = scrollTop - startingPoint;
       POIIndex = adjustedScrollTop / POIHeight;
-      if (POIIndex < 0) {
-        return 0;
+      if (POIIndex < -1) {
+        return -1;
       } else {
         return POIIndex;
       }

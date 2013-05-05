@@ -43,14 +43,30 @@ describe 'Map', ->
       expect(TRIP.map.percentageFromCurrentToNextPOI(1.50)).toBe(0.50)
     it 'should return 0.75 for (2.75)', ->
       expect(TRIP.map.percentageFromCurrentToNextPOI(2.75)).toBe(0.75)
-    it 'should return 1 for (3)', ->
-      expect(TRIP.map.percentageFromCurrentToNextPOI(3)).toBe(1)
+    it 'should return 0 for (3)', ->
+      expect(TRIP.map.percentageFromCurrentToNextPOI(3)).toBe(0)
 
   describe 'calculateNextCoordinates', ->
-    currentPOI = {lat: 10, lon:10}
-    nextPOI = {lat: 20, lon:20}
-
     describe "basic case with cur:[10,10] and next:[20,20]", ->
+      currentPOI = {lat: 10, lon:10}
+      nextPOI = {lat: 20, lon:20}
       it 'should return lat:12.5, lon:12.5 for a 0.25 percentage', ->
         expect(TRIP.map.calculateNextCoordinates(0.25,currentPOI,nextPOI).lat).toBe(12.5)
         expect(TRIP.map.calculateNextCoordinates(0.25,currentPOI,nextPOI).lon).toBe(12.5)
+      it 'should return lat:20, lon:20 for a 1 percentage', ->
+              expect(TRIP.map.calculateNextCoordinates(1,currentPOI,nextPOI).lat).toBe(20)
+              expect(TRIP.map.calculateNextCoordinates(1,currentPOI,nextPOI).lon).toBe(20)
+    describe "cur:[-10,-10] and next:[20,20]", ->
+      currentPOI = {lat:-10,lon:-10}
+      nextPOI = {lat: 20,lon:20}
+      it 'should return [5,5] for a 0.5%', ->
+        expect(TRIP.map.calculateNextCoordinates(0.5,currentPOI,nextPOI).lat).toBe(5)
+        expect(TRIP.map.calculateNextCoordinates(0.5,currentPOI,nextPOI).lon).toBe(5)
+
+  describe 'calculateNextZoomLevel', ->
+    initialZoom = 4
+    finalZoom = 10
+    it 'should return 7 for currentPOIIndex: 0.5', ->
+      expect(TRIP.map.calculateNextZoomLevel(0.5,initialZoom,finalZoom)).toBe(7)
+    it 'should return 10 for currentPOIIndex: 0.9', ->
+      expect(TRIP.map.calculateNextZoomLevel(0.9,initialZoom,finalZoom)).toBe(10)

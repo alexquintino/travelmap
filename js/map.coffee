@@ -1,14 +1,21 @@
 window.TRIP.map  = {
 
   throttledUpdatePosition : (curPOIIndex) ->
-    if curPOIIndex >= 0
-      TRIP.scrolling.currentPOIIndex = Math.floor(curPOIIndex)
+    console.log(curPOIIndex)
+    if -1 > curPOIIndex > 0
+      TRIP._map.setZoom(@calculateNextZoomLevel(curPOIIndex,4,10))
+    else if curPOIIndex >= 0
       currentPOI = @currentPOI(curPOIIndex,TRIP.POISOrder)
       nextPOI = @nextPOI(curPOIIndex,TRIP.POISOrder)
       percentageFromCurrentToNextPOI = @percentageFromCurrentToNextPOI(curPOIIndex,TRIP.POISOrder)
+      console.log("cur:" + currentPOI.name + " next:" + nextPOI.name + " percentage:" + percentageFromCurrentToNextPOI)
       nextCoords = @calculateNextCoordinates(percentageFromCurrentToNextPOI, currentPOI, nextPOI)
       nextGoogleCords = new google.maps.LatLng(nextCoords.lat,nextCoords.lon)
       TRIP._map.panTo(nextGoogleCords)
+
+  calculateNextZoomLevel: (curPOIIndex,initialZoom, finalZoom) ->
+    diff = finalZoom - initialZoom
+    initialZoom + Math.ceil(diff * curPOIIndex)
 
   currentPOI : (POIIndex,POIList) ->
     currentPOIIndexFloored = Math.floor(POIIndex)
@@ -27,7 +34,7 @@ window.TRIP.map  = {
   percentageFromCurrentToNextPOI : (POIIndex) ->
     POIIndexFloored = Math.floor(POIIndex)
     if POIIndex == POIIndexFloored
-      1
+      0
     else
       POIIndex - POIIndexFloored
 
@@ -42,7 +49,7 @@ window.TRIP.map  = {
   init : (mapElem) ->
     options = {
       center : new google.maps.LatLng(POIS.costaRica.sanJose.lat,POIS.costaRica.sanJose.lon),
-      zoom: 10,
+      zoom: 4,
       mapTypeId: google.maps.MapTypeId.ROADMAP,
       disableDoubleClickZoom: true,
       keyboardShortcuts: false,

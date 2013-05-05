@@ -5,9 +5,9 @@ var POIS = {
 		Miami:		{lat:25.795, lon:-80.284},
 	},
 	costaRica:{
-		sanJose :	{lon:-84.08, lat:9.93},
-		laFortuna : 	{lon:-84.644, lat:10.471},
-		tamarindo:	{lon:-85.842, lat:10.299},
+		sanJose :	{name: "San Jose",lon:-84.08, lat:9.93},
+		laFortuna : 	{name: "La Fortuna", lon:-84.644, lat:10.471},
+		tamarindo:	{name: "Tamarindo", lon:-85.842, lat:10.299},
 		PenasBlancas:	{lat:11.22, lon:-85.61},			
 	},
 	Nicaragua:{

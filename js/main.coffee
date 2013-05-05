@@ -30,7 +30,7 @@ $ ->
 
   $(".poi").css("padding-top",$(window).height())
   TRIP.scrolling.settings.startingPoint = $(window).height()
-  TRIP.scrolling.settings.POIHeight = $(".poi-label").first().height()
+  TRIP.scrolling.settings.POIHeight = $(".poi").first().outerHeight()
 
   throttled = _.throttle(TRIP.scrollCallback,100)
 

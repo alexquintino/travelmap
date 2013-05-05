@@ -5,5 +5,5 @@ window.TRIP.pois = {
 
     adjustedScrollTop = scrollTop - startingPoint
     POIIndex = adjustedScrollTop / POIHeight
-    if POIIndex < 0 then 0 else POIIndex
+    if POIIndex < -1 then -1 else POIIndex
 }
