@@ -4,48 +4,6 @@ describe 'Map', ->
   Miami = {lat:25.795, lon:-80.284}
   POIList = [Frankfurt,London,Miami]
 
-  describe 'currentPOI', ->
-    it 'should return the first POI', ->
-      expect(TRIP.map.currentPOI(0.2,POIList)).toBe(Frankfurt)
-      expect(TRIP.map.currentPOI(0.67,POIList)).toBe(Frankfurt)
-      expect(TRIP.map.currentPOI(0.99,POIList)).toBe(Frankfurt)
-
-    it 'should return the second POI', ->
-      expect(TRIP.map.currentPOI(1.2,POIList)).toBe(London)
-      expect(TRIP.map.currentPOI(1.67,POIList)).toBe(London)
-      expect(TRIP.map.currentPOI(1.99,POIList)).toBe(London)
-
-    it 'should return last POI if the POI Index is over the size of the list', ->
-      expect(TRIP.map.currentPOI(66,POIList)).toBe(Miami)
-      expect(TRIP.map.currentPOI(3,POIList)).toBe(Miami)
-      expect(TRIP.map.currentPOI(4,POIList)).toBe(Miami)
-
-  describe 'nextPOI', ->
-    it 'should return the second POI', ->
-      expect(TRIP.map.nextPOI(0.2,POIList)).toBe(London)
-      expect(TRIP.map.nextPOI(0.67,POIList)).toBe(London)
-      expect(TRIP.map.nextPOI(0.99,POIList)).toBe(London)
-
-    it 'should return the second POI', ->
-      expect(TRIP.map.nextPOI(1.2,POIList)).toBe(Miami)
-      expect(TRIP.map.nextPOI(1.67,POIList)).toBe(Miami)
-      expect(TRIP.map.nextPOI(1.99,POIList)).toBe(Miami)
-
-    it 'should return last POI if the POI Index is over the size of the list', ->
-      expect(TRIP.map.currentPOI(66,POIList)).toBe(Miami)
-      expect(TRIP.map.currentPOI(3,POIList)).toBe(Miami)
-      expect(TRIP.map.currentPOI(4,POIList)).toBe(Miami)
-
-  describe 'percentageFromCurrentToNextPOI', ->
-    it 'should return 0.25 for (0.25)', ->
-      expect(TRIP.map.percentageFromCurrentToNextPOI(0.25)).toBe(0.25)
-    it 'should return 0.50 for (1.50)', ->
-      expect(TRIP.map.percentageFromCurrentToNextPOI(1.50)).toBe(0.50)
-    it 'should return 0.75 for (2.75)', ->
-      expect(TRIP.map.percentageFromCurrentToNextPOI(2.75)).toBe(0.75)
-    it 'should return 0 for (3)', ->
-      expect(TRIP.map.percentageFromCurrentToNextPOI(3)).toBe(0)
-
   describe 'calculateNextCoordinates', ->
     describe "basic case with cur:[10,10] and next:[20,20]", ->
       currentPOI = {lat: 10, lon:10}
@@ -66,7 +24,33 @@ describe 'Map', ->
   describe 'calculateNextZoomLevel', ->
     initialZoom = 4
     finalZoom = 10
+    it 'should return 4 for currentPOIIndex: 0', ->
+      expect(TRIP.map.calculateNextZoomLevel(0,initialZoom,finalZoom)).toBe(4)
     it 'should return 7 for currentPOIIndex: 0.5', ->
       expect(TRIP.map.calculateNextZoomLevel(0.5,initialZoom,finalZoom)).toBe(7)
     it 'should return 10 for currentPOIIndex: 0.9', ->
       expect(TRIP.map.calculateNextZoomLevel(0.9,initialZoom,finalZoom)).toBe(10)
+
+  describe 'throttledUpdatePosition', ->
+    beforeEach ->
+      spyOn(TRIP.map,"calculateNextZoomLevel").andCallThrough()
+      spyOn(TRIP.map,"setZoom")
+      spyOn(TRIP.map,"panTo")
+      spyOn(TRIP.pois,"currentPOI").andReturn(POIList[0])
+      spyOn(TRIP.pois,"nextPOI").andReturn(POIList[1])
+      spyOn(TRIP.pois,"percentageFromCurrentToNextPOI").andReturn(0.5)
+
+    it 'should set the zoom for currentIndex 0', ->
+      TRIP.map.throttledUpdatePosition(0)
+      expect(TRIP.map.calculateNextZoomLevel).toHaveBeenCalledWith(0,TRIP.map.minZoomLevel,TRIP.map.maxZoomLevel)
+      expect(TRIP.map.setZoom).toHaveBeenCalled()
+    it 'should set the zoom for currentIndex 0.5', ->
+      TRIP.map.throttledUpdatePosition(0.5)
+      expect(TRIP.map.calculateNextZoomLevel).toHaveBeenCalledWith(0.5,TRIP.map.minZoomLevel,TRIP.map.maxZoomLevel)
+      expect(TRIP.map.setZoom).toHaveBeenCalled()
+    it 'should call currentPOI and nextPOI for currentIndex 1', ->
+      TRIP.map.throttledUpdatePosition(1)
+      expect(TRIP.pois.currentPOI).toHaveBeenCalledWith(0,TRIP.POISOrder)
+      expect(TRIP.pois.nextPOI).toHaveBeenCalledWith(0,TRIP.POISOrder)
+      expect(TRIP.pois.percentageFromCurrentToNextPOI).toHaveBeenCalledWith(0,TRIP.POISOrder)
+      expect(TRIP.map.panTo).toHaveBeenCalled()

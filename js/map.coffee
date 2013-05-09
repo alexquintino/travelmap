@@ -1,42 +1,29 @@
 window.TRIP.map  = {
+  minZoomLevel : 4
+  maxZoomLevel : 10
 
   throttledUpdatePosition : (curPOIIndex) ->
     console.log(curPOIIndex)
-    if -1 > curPOIIndex > 0
-      TRIP._map.setZoom(@calculateNextZoomLevel(curPOIIndex,4,10))
-    else if curPOIIndex >= 0
-      currentPOI = @currentPOI(curPOIIndex,TRIP.POISOrder)
-      nextPOI = @nextPOI(curPOIIndex,TRIP.POISOrder)
-      percentageFromCurrentToNextPOI = @percentageFromCurrentToNextPOI(curPOIIndex,TRIP.POISOrder)
+    if 0 <= curPOIIndex < 1
+      @setZoom @calculateNextZoomLevel(curPOIIndex,@minZoomLevel,@maxZoomLevel)
+    else if curPOIIndex >= 1
+      curPOIIndex -= 1
+      currentPOI = TRIP.pois.currentPOI(curPOIIndex,TRIP.POISOrder)
+      nextPOI = TRIP.pois.nextPOI(curPOIIndex,TRIP.POISOrder)
+      percentageFromCurrentToNextPOI = TRIP.pois.percentageFromCurrentToNextPOI(curPOIIndex,TRIP.POISOrder)
       console.log("cur:" + currentPOI.name + " next:" + nextPOI.name + " percentage:" + percentageFromCurrentToNextPOI)
-      nextCoords = @calculateNextCoordinates(percentageFromCurrentToNextPOI, currentPOI, nextPOI)
-      nextGoogleCords = new google.maps.LatLng(nextCoords.lat,nextCoords.lon)
-      TRIP._map.panTo(nextGoogleCords)
+      @panTo @calculateNextCoordinates(percentageFromCurrentToNextPOI, currentPOI, nextPOI)
+
+
+  setZoom : (level) ->
+    TRIP._map.setZoom(level)
+  panTo: (coords) ->
+    googleCoords = new google.maps.LatLng(coords.lat,coords.lon)
+    TRIP._map.panTo(googleCoords)
 
   calculateNextZoomLevel: (curPOIIndex,initialZoom, finalZoom) ->
     diff = finalZoom - initialZoom
     initialZoom + Math.ceil(diff * curPOIIndex)
-
-  currentPOI : (POIIndex,POIList) ->
-    currentPOIIndexFloored = Math.floor(POIIndex)
-    if currentPOIIndexFloored >= POIList.length
-      _.last(POIList)
-    else
-      POIList[currentPOIIndexFloored]
-
-  nextPOI : (POIIndex,POIList) ->
-    currentPOIIndexFloored = Math.floor(POIIndex)
-    if currentPOIIndexFloored + 1 >= POIList.length
-      _.last(POIList)
-    else
-      POIList[currentPOIIndexFloored + 1]
-
-  percentageFromCurrentToNextPOI : (POIIndex) ->
-    POIIndexFloored = Math.floor(POIIndex)
-    if POIIndex == POIIndexFloored
-      0
-    else
-      POIIndex - POIIndexFloored
 
   calculateNextCoordinates : (percentageFromCurrentToNextPOI, currentPOI, nextPOI) ->
     nextLatIncrement = (nextPOI.lat - currentPOI.lat) * percentageFromCurrentToNextPOI
