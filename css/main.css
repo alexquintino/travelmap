@@ -94,37 +94,59 @@ textarea {
    ========================================================================== */
 
 html, body {
-    height: 100%;
+    width: 100%;
+    margin:0;
+    padding: 0;
 }
+
+.skrollable {
+    /*
+     * First-level skrollables are positioned relative to window
+     */
+    position:fixed;
+
+    /*
+     * Skrollables by default have a z-index of 100 in order to make it easy to position elements in front/back without changing each skrollable
+     */
+    z-index:100;
+}
+
+.skrollable .skrollable {
+    /*
+     * Second-level skrollables are positioned relative their parent skrollable
+     */
+    position:absolute;
+}
+
+.skrollable .skrollable .skrollable {
+    /*
+     * Third-level (and below) skrollables are positioned static
+     */
+    position:static;
+}
+
 #start {
 	background-color: grey;
 	color:white;
     height: 100%;
+    width: 100%;
 }
 
-#start h1 {
-    margin: 0;
-    padding: 0;
+#map_container {
+    position: fixed;
+    width: 100%;
+    height: 100%;
 }
-
 #map_canvas {
     position: absolute;
-    top: 0px;
-    left: 0px;
+    top:0;
+    left:0;
+    bottom: 0;
+    right: 0;
     width: 100%;
     height: 100%;
-    z-index: -1;
 }
 
-
-.affix {
-    position: fixed; 
-    top: 0px; 
-    left: 0px;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-}
 
 .poi-label {
     padding: 2em;
@@ -133,10 +155,8 @@ html, body {
 }
 
 .poi {
-    background-color: transparent;
-    position: relative;
-    float: left;
     clear:both;
+    float: left;
 }
 
 

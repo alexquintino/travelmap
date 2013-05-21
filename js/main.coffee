@@ -23,18 +23,16 @@ TRIP.initPaths = ->
     TRIP.map.drawPath(POIS.costaRica.sanJose,POIS.costaRica.laFortuna);
     TRIP.map.drawPath(POIS.costaRica.laFortuna,POIS.costaRica.tamarindo);
 
-TRIP.initDom($("body"));
 TRIP.map.init($("#map_canvas"));
+TRIP.initDom($("#poi_container"));
 
 $ ->
-
-  $(".poi").css("padding-top",$(window).height())
   TRIP.scrolling.settings.startingPoint = $(window).height()
-  TRIP.scrolling.settings.POIHeight = $(".poi").first().outerHeight()
+  TRIP.scrolling.settings.POIHeight = $(window).height()
 
   throttled = _.throttle(TRIP.scrollCallback,100)
 
-  s = skrollr.init {
+  TRIP.scrolling.skrollr = skrollr.init {
     render : throttled,
     forceHeight : true,
     smoothScrolling: true
