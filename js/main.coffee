@@ -18,7 +18,7 @@ drawPOI = (poi) ->
     .attr('r', 5)
     .attr('class',"map-poi")
 
-TRIP.initPaths = ->
+TRIP.drawPaths = ->
   if $("#mapOverlay path").size() == 0
     TRIP.map.drawPath(POIS.costaRica.sanJose,POIS.costaRica.laFortuna);
     TRIP.map.drawPath(POIS.costaRica.laFortuna,POIS.costaRica.tamarindo);
@@ -31,6 +31,8 @@ $ ->
   TRIP.scrolling.settings.POIHeight = $(window).height()
 
   throttled = _.throttle(TRIP.scrollCallback,100)
+  TRIP.map.setProjection = _.once(TRIP.map._setProjection)
+
 
   TRIP.scrolling.skrollr = skrollr.init {
     render : throttled,

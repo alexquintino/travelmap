@@ -3,7 +3,6 @@ window.TRIP.map  = {
   maxZoomLevel : 10
 
   throttledUpdatePosition : (curPOIIndex) ->
-    console.log(curPOIIndex)
     if 0 <= curPOIIndex < 1
       @setZoom @calculateNextZoomLevel(curPOIIndex,@minZoomLevel,@maxZoomLevel)
     else if curPOIIndex >= 1
@@ -11,7 +10,6 @@ window.TRIP.map  = {
       currentPOI = TRIP.pois.currentPOI(curPOIIndex,TRIP.POISOrder)
       nextPOI = TRIP.pois.nextPOI(curPOIIndex,TRIP.POISOrder)
       percentageFromCurrentToNextPOI = TRIP.pois.percentageFromCurrentToNextPOI(curPOIIndex,TRIP.POISOrder)
-      console.log("cur:" + currentPOI.name + " next:" + nextPOI.name + " percentage:" + percentageFromCurrentToNextPOI)
       @panTo @calculateNextCoordinates(percentageFromCurrentToNextPOI, currentPOI, nextPOI)
 
 
@@ -53,19 +51,22 @@ window.TRIP.map  = {
         .attr("height", mapElem.height())
       mapOverlay = svg.append("g").attr("id", "mapOverlay")
 
-      overlay.draw = ->
-        markerOverlay = this
-        overlayProjection = markerOverlay.getProjection()
+    overlay.draw = ->
+      markerOverlay = this
+      overlayProjection = markerOverlay.getProjection()
 
-        #Turn the overlay projection into a d3 projection
-        TRIP.map.projection = (coordinates) ->
-          googleCoordinates = new google.maps.LatLng(coordinates[1], coordinates[0])
-          pixelCoordinates = overlayProjection.fromLatLngToDivPixel(googleCoordinates)
-          return [pixelCoordinates.x, pixelCoordinates.y]
+      #Turn the overlay projection into a d3 projection
+      TRIP.map.setProjection(overlayProjection)
 
-        path = d3.geo.path().projection(TRIP.map.projection)
-        TRIP.initPaths()
+      TRIP.drawPaths()
     overlay.setMap(TRIP._map)
+
+  _setProjection : (overlayProjection) ->
+    TRIP.map.projection = (coordinates) ->
+      googleCoordinates = new google.maps.LatLng(coordinates[1], coordinates[0])
+      pixelCoordinates = overlayProjection.fromLatLngToDivPixel(googleCoordinates)
+      return [pixelCoordinates.x, pixelCoordinates.y]
+    d3.geo.path().projection(TRIP.map.projection)
 
   drawPath : (from,to) ->
     fromCoord = @projection([from.lon,from.lat])
