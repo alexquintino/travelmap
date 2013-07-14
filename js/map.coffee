@@ -69,16 +69,17 @@ window.TRIP.map  = {
       .attr('fill-opacity',0)
 
 
-  mapOptions : {
-    #San Jose, Costa Rica
-    center : new google.maps.LatLng(9.93,-84.08),
-    zoom: 4,
-    mapTypeId: google.maps.MapTypeId.ROADMAP,
-    disableDoubleClickZoom: true,
-    keyboardShortcuts: false,
-    disableDefaultUI: true,
-    draggable: false,
-    scrollwheel: false,
-  }
+  mapOptions : () ->
+    {
+      #San Jose, Costa Rica
+      center : new google.maps.LatLng(9.93,-84.08),
+      zoom: 4,
+      mapTypeId: google.maps.MapTypeId.ROADMAP,
+      disableDoubleClickZoom: true,
+      keyboardShortcuts: false,
+      disableDefaultUI: true,
+      draggable: false,
+      scrollwheel: false,
+    }
 }
 
