@@ -2,26 +2,17 @@ window.TRIP.map  = {
   minZoomLevel : 4
   maxZoomLevel : 10
 
-  throttledUpdatePosition : (curPOIIndex) ->
-    if 0 <= curPOIIndex < 1
-      @setZoom @calculateNextZoomLevel(curPOIIndex,@minZoomLevel,@maxZoomLevel)
-    else if curPOIIndex >= 1
+  updatePosition : (curPOIIndex) ->
+    if curPOIIndex >= 1
       curPOIIndex -= 1
       currentPOI = TRIP.pois.currentPOI(curPOIIndex,TRIP.POISOrder)
       nextPOI = TRIP.pois.nextPOI(curPOIIndex,TRIP.POISOrder)
       percentageFromCurrentToNextPOI = TRIP.pois.percentageFromCurrentToNextPOI(curPOIIndex,TRIP.POISOrder)
       @panTo @calculateNextCoordinates(percentageFromCurrentToNextPOI, currentPOI, nextPOI)
 
-
-  setZoom : (level) ->
-    TRIP._map.setZoom(level) unless TRIP._map is undefined
   panTo: (coords) ->
     googleCoords = new google.maps.LatLng(coords.lat,coords.lon)
     TRIP._map.panTo(googleCoords)
-
-  calculateNextZoomLevel: (curPOIIndex,initialZoom, finalZoom) ->
-    diff = finalZoom - initialZoom
-    initialZoom + Math.ceil(diff * curPOIIndex)
 
   calculateNextCoordinates : (percentageFromCurrentToNextPOI, currentPOI, nextPOI) ->
     nextLatIncrement = (nextPOI.lat - currentPOI.lat) * percentageFromCurrentToNextPOI
@@ -32,7 +23,7 @@ window.TRIP.map  = {
     {lat:nextLat, lon:nextLon}
 
   init : (mapElem,overlay_callback) ->
-    TRIP._map = new google.maps.Map(mapElem,@mapOptions)
+    TRIP._map = new google.maps.Map(mapElem,@mapOptions())
     overlay = new google.maps.OverlayView()
     overlay.onAdd = ->
       layer = d3.select(this.getPanes().overlayLayer).append("div").attr("class", "SvgOverlay")

@@ -21,35 +21,15 @@ describe 'Map', ->
         expect(TRIP.map.calculateNextCoordinates(0.5,currentPOI,nextPOI).lat).toBe(5)
         expect(TRIP.map.calculateNextCoordinates(0.5,currentPOI,nextPOI).lon).toBe(5)
 
-  describe 'calculateNextZoomLevel', ->
-    initialZoom = 4
-    finalZoom = 10
-    it 'should return 4 for currentPOIIndex: 0', ->
-      expect(TRIP.map.calculateNextZoomLevel(0,initialZoom,finalZoom)).toBe(4)
-    it 'should return 7 for currentPOIIndex: 0.5', ->
-      expect(TRIP.map.calculateNextZoomLevel(0.5,initialZoom,finalZoom)).toBe(7)
-    it 'should return 10 for currentPOIIndex: 0.9', ->
-      expect(TRIP.map.calculateNextZoomLevel(0.9,initialZoom,finalZoom)).toBe(10)
-
-  describe 'throttledUpdatePosition', ->
+  describe 'updatePosition', ->
     beforeEach ->
-      spyOn(TRIP.map,"calculateNextZoomLevel").andCallThrough()
-      spyOn(TRIP.map,"setZoom")
       spyOn(TRIP.map,"panTo")
       spyOn(TRIP.pois,"currentPOI").andReturn(POIList[0])
       spyOn(TRIP.pois,"nextPOI").andReturn(POIList[1])
       spyOn(TRIP.pois,"percentageFromCurrentToNextPOI").andReturn(0.5)
 
-    it 'should set the zoom for currentIndex 0', ->
-      TRIP.map.throttledUpdatePosition(0)
-      expect(TRIP.map.calculateNextZoomLevel).toHaveBeenCalledWith(0,TRIP.map.minZoomLevel,TRIP.map.maxZoomLevel)
-      expect(TRIP.map.setZoom).toHaveBeenCalled()
-    it 'should set the zoom for currentIndex 0.5', ->
-      TRIP.map.throttledUpdatePosition(0.5)
-      expect(TRIP.map.calculateNextZoomLevel).toHaveBeenCalledWith(0.5,TRIP.map.minZoomLevel,TRIP.map.maxZoomLevel)
-      expect(TRIP.map.setZoom).toHaveBeenCalled()
     it 'should call currentPOI and nextPOI for currentIndex 1', ->
-      TRIP.map.throttledUpdatePosition(1)
+      TRIP.map.updatePosition(1)
       expect(TRIP.pois.currentPOI).toHaveBeenCalledWith(0,TRIP.POISOrder)
       expect(TRIP.pois.nextPOI).toHaveBeenCalledWith(0,TRIP.POISOrder)
       expect(TRIP.pois.percentageFromCurrentToNextPOI).toHaveBeenCalledWith(0,TRIP.POISOrder)
