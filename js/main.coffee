@@ -12,11 +12,13 @@ $ ->
   TRIP.scrollCallback = _.throttle(TRIP._scrollCallback,100)
   TRIP.map.setProjection = _.once(TRIP.map._setProjection)
 
-  TRIP.pois.loadGeoJson()
+  TRIP.map.init $("#map_canvas")[0], ->
+    TRIP.pois.loadGeoJson().done () ->
+      TRIP.map.drawPaths()
   TRIP.pois.loadJson().done () ->
     TRIP.initDom($("#poi_container"),TRIP.pois.list)
     TRIP.initSkrollr()
-  TRIP.map.init($("#map_canvas"))
+
 
   TRIP.scrolling.settings.startingPoint = $(window).height()
   TRIP.scrolling.settings.POIHeight = $(window).height()

@@ -31,26 +31,14 @@ window.TRIP.map  = {
     nextLon = currentPOI.lon + nextLonIncrement
     {lat:nextLat, lon:nextLon}
 
-  init : (mapElem) ->
-    options = {
-      #San Jose, Costa Rica
-      center : new google.maps.LatLng(9.93,-84.08),
-      zoom: 4,
-      mapTypeId: google.maps.MapTypeId.ROADMAP,
-      disableDoubleClickZoom: true,
-      keyboardShortcuts: false,
-      disableDefaultUI: true,
-      draggable: false,
-      scrollwheel: false,
-    }
-    TRIP._map = new google.maps.Map(document.getElementById("map_canvas"),options)
+  init : (mapElem,overlay_callback) ->
+    TRIP._map = new google.maps.Map(mapElem,@mapOptions)
     overlay = new google.maps.OverlayView()
     overlay.onAdd = ->
       layer = d3.select(this.getPanes().overlayLayer).append("div").attr("class", "SvgOverlay")
       svg = layer.append("svg")
-        .attr("width", 9000)
-        .attr("height", 9000)
       mapOverlay = svg.append("g").attr("id", "mapOverlay")
+      overlay_callback.call()
 
     overlay.draw = ->
       markerOverlay = this
@@ -69,32 +57,6 @@ window.TRIP.map  = {
       return [pixelCoordinates.x + 4000, pixelCoordinates.y + 4000]
     d3.geo.path().projection(TRIP.map.projection)
 
-#  drawPath : (from,to) ->
-#    fromCoord = @projection([from.lon,from.lat])
-#    toCoord = @projection([to.lon,to.lat])
-#
-#    data = [[{x: fromCoord[0], y:fromCoord[1]},
-#            {x: toCoord[0], y:toCoord[1]}]]
-#
-#    line = d3.svg.line()
-#      .x (d) ->
-#        return d.x
-#      .y (d) ->
-#        return  d.y
-#      .interpolate("linear")
-#
-##    d3.select('#mapOverlay').append('path')
-##      .attr('d',line(data))
-##      .attr('stroke','blue')
-##      .attr('stroke-width',2)
-#
-#    d3.select('#mapOverlay').selectAll('.line ')
-#        .data(data)
-#        .enter().append('path')
-#        .attr('d',line)
-#        .attr("class", "line")
-#        .attr('stroke','blue')
-#        .attr('stroke-width',2)
   drawPaths: () ->
     path = d3.geo.path()
     path.projection(@projection)
@@ -106,5 +68,17 @@ window.TRIP.map  = {
       .attr('stroke-width',2)
       .attr('fill-opacity',0)
 
+
+  mapOptions : {
+    #San Jose, Costa Rica
+    center : new google.maps.LatLng(9.93,-84.08),
+    zoom: 4,
+    mapTypeId: google.maps.MapTypeId.ROADMAP,
+    disableDoubleClickZoom: true,
+    keyboardShortcuts: false,
+    disableDefaultUI: true,
+    draggable: false,
+    scrollwheel: false,
+  }
 }
 
