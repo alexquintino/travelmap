@@ -27,4 +27,13 @@ window.TRIP.pois = {
       0
     else
       POIIndex - POIIndexFloored
+
+  loadGeoJson: () ->
+    $.getJSON("/pois.geo.json", (data) ->
+      TRIP.pois.geoJson = data
+    )
+  loadJson: () ->
+    $.getJSON("/pois.json", (data) ->
+      TRIP.pois.list = data
+    )
 }

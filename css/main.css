@@ -159,6 +159,14 @@ html, body {
     float: left;
 }
 
+.SvgOverlay svg {
+    position: absolute;
+    top: -4000px;
+    left: -4000px;
+    width: 8000px;
+    height: 8000px;
+}
+
 
 
 

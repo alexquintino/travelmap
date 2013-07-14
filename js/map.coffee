@@ -14,7 +14,7 @@ window.TRIP.map  = {
 
 
   setZoom : (level) ->
-    TRIP._map.setZoom(level)
+    TRIP._map.setZoom(level) unless TRIP._map is undefined
   panTo: (coords) ->
     googleCoords = new google.maps.LatLng(coords.lat,coords.lon)
     TRIP._map.panTo(googleCoords)
@@ -33,7 +33,8 @@ window.TRIP.map  = {
 
   init : (mapElem) ->
     options = {
-      center : new google.maps.LatLng(POIS.costaRica.sanJose.lat,POIS.costaRica.sanJose.lon),
+      #San Jose, Costa Rica
+      center : new google.maps.LatLng(9.93,-84.08),
       zoom: 4,
       mapTypeId: google.maps.MapTypeId.ROADMAP,
       disableDoubleClickZoom: true,
@@ -47,8 +48,8 @@ window.TRIP.map  = {
     overlay.onAdd = ->
       layer = d3.select(this.getPanes().overlayLayer).append("div").attr("class", "SvgOverlay")
       svg = layer.append("svg")
-        .attr("width", mapElem.width())
-        .attr("height", mapElem.height())
+        .attr("width", 9000)
+        .attr("height", 9000)
       mapOverlay = svg.append("g").attr("id", "mapOverlay")
 
     overlay.draw = ->
@@ -58,33 +59,52 @@ window.TRIP.map  = {
       #Turn the overlay projection into a d3 projection
       TRIP.map.setProjection(overlayProjection)
 
-      TRIP.drawPaths()
+#      TRIP.map.drawPaths()
     overlay.setMap(TRIP._map)
 
   _setProjection : (overlayProjection) ->
     TRIP.map.projection = (coordinates) ->
       googleCoordinates = new google.maps.LatLng(coordinates[1], coordinates[0])
       pixelCoordinates = overlayProjection.fromLatLngToDivPixel(googleCoordinates)
-      return [pixelCoordinates.x, pixelCoordinates.y]
+      return [pixelCoordinates.x + 4000, pixelCoordinates.y + 4000]
     d3.geo.path().projection(TRIP.map.projection)
 
-  drawPath : (from,to) ->
-    fromCoord = @projection([from.lon,from.lat])
-    toCoord = @projection([to.lon,to.lat])
-
-    data = [{x: fromCoord[0], y:fromCoord[1]},
-            {x: toCoord[0], y:toCoord[1]}]
-
-    line = d3.svg.line()
-      .x (d) ->
-        return d.x
-      .y (d) ->
-        return  d.y
-      .interpolate("linear")
-
-    d3.select('#mapOverlay').append('path')
-      .attr('d',line(data))
-      .attr('stroke','blue')
+#  drawPath : (from,to) ->
+#    fromCoord = @projection([from.lon,from.lat])
+#    toCoord = @projection([to.lon,to.lat])
+#
+#    data = [[{x: fromCoord[0], y:fromCoord[1]},
+#            {x: toCoord[0], y:toCoord[1]}]]
+#
+#    line = d3.svg.line()
+#      .x (d) ->
+#        return d.x
+#      .y (d) ->
+#        return  d.y
+#      .interpolate("linear")
+#
+##    d3.select('#mapOverlay').append('path')
+##      .attr('d',line(data))
+##      .attr('stroke','blue')
+##      .attr('stroke-width',2)
+#
+#    d3.select('#mapOverlay').selectAll('.line ')
+#        .data(data)
+#        .enter().append('path')
+#        .attr('d',line)
+#        .attr("class", "line")
+#        .attr('stroke','blue')
+#        .attr('stroke-width',2)
+  drawPaths: () ->
+    path = d3.geo.path()
+    path.projection(@projection)
+    d3.select('#mapOverlay').selectAll("path")
+      .data(TRIP.pois.geoJson.features)
+      .enter().append("path")
+      .attr("d",path)
+      .attr("stroke",'blue')
       .attr('stroke-width',2)
+      .attr('fill-opacity',0)
+
 }
 

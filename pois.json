@@ -1,0 +1,114 @@
+[
+    {
+       "name" : "Frankfurt",
+       "lat": 50.037122,
+       "lon": 8.560538
+    },
+    {
+        "name": "London",
+        "lat": 51.472,
+        "lon": -0.451
+    },
+    {
+        "name":"Miami",
+        "lat": 25.795,
+        "lon": -80.284
+    },
+    {
+        "name": "San Jose",
+        "lon": -84.08,
+        "lat": 9.93
+    },
+    {
+        "name": "La Fortuna",
+        "lon": -84.644,
+        "lat": 10.471
+    },
+    {
+        "name": "Tamarindo",
+        "lon": -85.842,
+        "lat": 10.299
+    },
+    {   "name":"PenasBlancas",
+        "lat": 11.22,
+        "lon": -85.61
+    },
+    {
+        "name":"Rivas",
+        "lat": 11.44,
+        "lon": -85.84
+    },
+    {   "name":"Moyogalpa",
+        "lat": 11.54,
+        "lon": -85.7
+    },
+    {   "name":"Granada",
+        "lat": 11.93,
+        "lon": -85.96
+    },
+    {
+        "name":"Managua",
+        "lat": 12.13,
+        "lon": -86.26
+    },
+    {
+        "name":"Somewhere in Honduras...",
+        "lat": 13.53,
+        "lon": -87.44
+    },
+    {
+        "name":"Tegucigalpa",
+        "lat": 14.06,
+        "lon": -87.22
+    },
+    {
+        "name":"LaCeiba",
+        "lat": 15.77,
+        "lon": -86.79
+    },
+    {
+        "name":"Utila",
+        "lat": 16.1,
+        "lon": -86.89
+    },
+    {
+        "name":"SanPedroSula",
+        "lat": 15.5,
+        "lon": -88.02
+    },
+    {
+        "name":"PuertoCortes",
+        "lat": 15.85,
+        "lon": -87.94
+    },
+    {
+        "name":"Border Honduras - Guatemala",
+        "lat": 15.6,
+        "lon": -88.37
+    },
+    {
+        "name":"Flores",
+        "lat": 16.93,
+        "lon": -89.89
+    },
+    {
+        "name":"BelizeCity",
+        "lat": 17.49,
+        "lon": -88.19
+    },
+    {
+        "name":"AmbergrisCaye",
+        "lat": 17.92,
+        "lon": -87.96
+    },
+    {
+        "name":"CayeCaulker",
+        "lat": 17.74,
+        "lon": -88.02
+    },
+    {
+        "name":"BelizeAirport",
+        "lat": 17.54,
+        "lon": -88.31
+    }
+]

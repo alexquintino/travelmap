@@ -4,15 +4,15 @@ window.TRIP = {
       startingPoint : 0
       POIHeight : 0
 
-  initDom : (element) ->
+  initDom : (element,pois_list) ->
     windowHeight = $(window).height()
     $("#start").attr("data-0","opacity:1")
     $("#start").attr("data-"+windowHeight,"opacity:0")
 
-    labels = ["SAN JOSÉ","LA FORTUNA", "TAMARINDO", "ISLA DE OMETEPE"]
     count = 1
 
-    _.each labels, (label) ->
+    _.each pois_list, (poi) ->
+      label = poi.name
       startHeight = count * windowHeight
       endHeight = startHeight + windowHeight
       heights = {startHeight:startHeight, endHeight:endHeight}
@@ -24,4 +24,14 @@ window.TRIP = {
       element.append(html);
       count += 1
 
-}
+  initSkrollr : () ->
+    TRIP.scrolling.skrollr = skrollr.init {
+      render : @scrollCallback,
+      forceHeight : true,
+      smoothScrolling: true
+    }
+
+  _scrollCallback : (props) ->
+    currentPOIIndex = TRIP.pois.calculateCurrentPOIIndex(props.curTop,TRIP.scrolling.settings)
+    TRIP.map.throttledUpdatePosition(currentPOIIndex)
+  }
