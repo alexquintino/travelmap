@@ -2,44 +2,32 @@ window.TRIP.map  = {
   minZoomLevel : 4
   maxZoomLevel : 10
 
-  updatePosition : (curPOIIndex) ->
-    if curPOIIndex >= 1
+  updatePosition : (curPOIIndex,POIsList) ->
+    if curPOIIndex >= 1 and curPOIIndex < POIsList.length
       curPOIIndex -= 1
-      currentPOI = TRIP.pois.currentPOI(curPOIIndex,TRIP.POISOrder)
-      nextPOI = TRIP.pois.nextPOI(curPOIIndex,TRIP.POISOrder)
-      percentageFromCurrentToNextPOI = TRIP.pois.percentageFromCurrentToNextPOI(curPOIIndex,TRIP.POISOrder)
+      currentPOI = TRIP.pois.currentPOI(curPOIIndex,POIsList)
+      nextPOI = TRIP.pois.nextPOI(curPOIIndex,POIsList)
+      percentageFromCurrentToNextPOI = TRIP.pois.percentageFromCurrentToNextPOI(curPOIIndex,TRIP.pois.list)
       @panTo @calculateNextCoordinates(percentageFromCurrentToNextPOI, currentPOI, nextPOI)
+      #@updateZoomLevel(nextPOI.zoomLevel)
 
   panTo: (coords) ->
     googleCoords = new google.maps.LatLng(coords.lat,coords.lon)
     TRIP._map.panTo(googleCoords)
 
+  updateZoomLevel: (nextPOIZoomLevel) ->
+    currentZoom = TRIP._map.getZoom()
+    unless nextPOIZoomLevel is undefined and currentZoom != nextPOIZoomLevel
+      TRIP._map.setZoom(nextPOIZoomLevel)
+
   calculateNextCoordinates : (percentageFromCurrentToNextPOI, currentPOI, nextPOI) ->
-    nextLatIncrement = (nextPOI.lat - currentPOI.lat) * percentageFromCurrentToNextPOI
-    nextLonIncrement = (nextPOI.lon - currentPOI.lon) * percentageFromCurrentToNextPOI
+    d3.geo.projection(@projection)
+    coords = d3.geo.interpolate([currentPOI.lon,currentPOI.lat],[nextPOI.lon,nextPOI.lat])(percentageFromCurrentToNextPOI)
+    {lat:coords[1],lon:coords[0]}
 
-    nextLat = currentPOI.lat + nextLatIncrement
-    nextLon = currentPOI.lon + nextLonIncrement
-    {lat:nextLat, lon:nextLon}
 
-  init : (mapElem,overlay_callback) ->
+  init : (mapElem) ->
     TRIP._map = new google.maps.Map(mapElem,@mapOptions())
-    overlay = new google.maps.OverlayView()
-    overlay.onAdd = ->
-      layer = d3.select(this.getPanes().overlayLayer).append("div").attr("class", "SvgOverlay")
-      svg = layer.append("svg")
-      mapOverlay = svg.append("g").attr("id", "mapOverlay")
-      overlay_callback.call()
-
-    overlay.draw = ->
-      markerOverlay = this
-      overlayProjection = markerOverlay.getProjection()
-
-      #Turn the overlay projection into a d3 projection
-      TRIP.map.setProjection(overlayProjection)
-
-#      TRIP.map.drawPaths()
-    overlay.setMap(TRIP._map)
 
   _setProjection : (overlayProjection) ->
     TRIP.map.projection = (coordinates) ->
@@ -49,10 +37,10 @@ window.TRIP.map  = {
     d3.geo.path().projection(TRIP.map.projection)
 
   drawPaths: () ->
-    path = d3.geo.path()
-    path.projection(@projection)
+    path = d3.geo.path().projection(@projection)
     d3.select('#mapOverlay').selectAll("path")
       .data(TRIP.pois.geoJson.features)
+      .attr("d",path)
       .enter().append("path")
       .attr("d",path)
       .attr("stroke",'blue')
@@ -60,17 +48,37 @@ window.TRIP.map  = {
       .attr('fill-opacity',0)
 
 
+
   mapOptions : () ->
     {
       #San Jose, Costa Rica
-      center : new google.maps.LatLng(9.93,-84.08),
-      zoom: 4,
-      mapTypeId: google.maps.MapTypeId.ROADMAP,
+#      center : new google.maps.LatLng(9.93,-84.08),
+      center : new google.maps.LatLng(50.037122,8.560538),
+      zoom: 6,
+      mapTypeId:google.maps.MapTypeId.ROADMAP,
       disableDoubleClickZoom: true,
       keyboardShortcuts: false,
       disableDefaultUI: true,
       draggable: false,
       scrollwheel: false,
     }
+
+  initPathOverlay: () ->
+    overlay = new google.maps.OverlayView()
+    overlay.onAdd = ->
+      layer = d3.select(this.getPanes().overlayLayer).append("div").attr("class", "SvgOverlay")
+      svg = layer.append("svg")
+      mapOverlay = svg.append("g").attr("id", "mapOverlay")
+
+      overlay.draw = ->
+        markerOverlay = this
+        overlayProjection = markerOverlay.getProjection()
+
+        #Turn the overlay projection into a d3 projection
+        TRIP.map.setProjection(overlayProjection)
+
+        TRIP.map.drawPaths()
+    overlay.setMap(TRIP._map)
+
 }
 
