@@ -9,7 +9,7 @@ drawPOI = (poi) ->
     .attr('class',"map-poi")
 
 $ ->
-  TRIP.scrollCallback = _.throttle(TRIP._scrollCallback,100)
+  TRIP.scrollCallback = _.throttle(TRIP._scrollCallback,20)
   TRIP.map.setProjection = _.once(TRIP.map._setProjection)
 
   TRIP.map.init $("#map_canvas")[0]
