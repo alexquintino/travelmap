@@ -9,16 +9,17 @@ window.TRIP.map  = {
       nextPOI = TRIP.pois.nextPOI(curPOIIndex,POIsList)
       percentageFromCurrentToNextPOI = TRIP.pois.percentageFromCurrentToNextPOI(curPOIIndex,TRIP.pois.list)
       @panTo @calculateNextCoordinates(percentageFromCurrentToNextPOI, currentPOI, nextPOI)
-      #@updateZoomLevel(nextPOI.zoomLevel)
+      @updateZoomLevel(currentPOI.zoomLevel,nextPOI.zoomLevel,percentageFromCurrentToNextPOI)
 
   panTo: (coords) ->
     googleCoords = new google.maps.LatLng(coords.lat,coords.lon)
     TRIP._map.panTo(googleCoords)
 
-  updateZoomLevel: (nextPOIZoomLevel) ->
-    currentZoom = TRIP._map.getZoom()
+  updateZoomLevel: (currentPOIZoomLevel, nextPOIZoomLevel,percentageToNextPOI) ->
     unless nextPOIZoomLevel is undefined and currentZoom != nextPOIZoomLevel
-      TRIP._map.setZoom(nextPOIZoomLevel)
+      zoomInc = Math.ceil((nextPOIZoomLevel - currentPOIZoomLevel) * percentageToNextPOI)
+      newZoom = currentPOIZoomLevel + zoomInc
+      TRIP._map.setZoom(newZoom)
 
   calculateNextCoordinates : (percentageFromCurrentToNextPOI, currentPOI, nextPOI) ->
     d3.geo.projection(@projection)

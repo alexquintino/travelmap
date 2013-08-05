@@ -1,114 +1,137 @@
 [
     {
-       "name" : "Frankfurt",
-       "lat": 50.037122,
-       "lon": 8.560538
+        "name" : "Frankfurt",
+        "lat": 50.037122,
+        "lon": 8.560538,
+        "zoomLevel": 11
     },
     {
         "name": "London",
         "lat": 51.472,
-        "lon": -0.451
+        "lon": -0.451,
+        "zoomLevel": 5
     },
     {
         "name":"Miami",
         "lat": 25.795,
-        "lon": -80.284
+        "lon": -80.284,
+        "zoomLevel": 5
     },
     {
         "name": "San Jose",
         "lon": -84.08,
-        "lat": 9.93
+        "lat": 9.93,
+        "zoomLevel": 11
     },
     {
         "name": "La Fortuna",
         "lon": -84.644,
-        "lat": 10.471
+        "lat": 10.471,
+        "zoomLevel": 11
     },
     {
         "name": "Tamarindo",
         "lon": -85.842,
-        "lat": 10.299
+        "lat": 10.299,
+        "zoomLevel": 11
     },
     {   "name":"PenasBlancas",
         "lat": 11.22,
-        "lon": -85.61
+        "lon": -85.61,
+        "zoomLevel": 11
     },
     {
         "name":"Rivas",
         "lat": 11.44,
-        "lon": -85.84
+        "lon": -85.84,
+        "zoomLevel": 11
     },
     {   "name":"Moyogalpa",
         "lat": 11.54,
-        "lon": -85.7
+        "lon": -85.7,
+        "zoomLevel": 11
     },
     {   "name":"Granada",
         "lat": 11.93,
-        "lon": -85.96
+        "lon": -85.96,
+        "zoomLevel": 11
     },
     {
         "name":"Managua",
         "lat": 12.13,
-        "lon": -86.26
+        "lon": -86.26,
+        "zoomLevel": 11
     },
     {
         "name":"Somewhere in Honduras...",
         "lat": 13.53,
-        "lon": -87.44
+        "lon": -87.44,
+        "zoomLevel": 11
     },
     {
         "name":"Tegucigalpa",
         "lat": 14.06,
-        "lon": -87.22
+        "lon": -87.22,
+        "zoomLevel": 11
     },
     {
         "name":"LaCeiba",
         "lat": 15.77,
-        "lon": -86.79
+        "lon": -86.79,
+        "zoomLevel": 11
     },
     {
         "name":"Utila",
         "lat": 16.1,
-        "lon": -86.89
+        "lon": -86.89,
+        "zoomLevel": 11
     },
     {
         "name":"SanPedroSula",
         "lat": 15.5,
-        "lon": -88.02
+        "lon": -88.02,
+        "zoomLevel": 11
     },
     {
         "name":"PuertoCortes",
         "lat": 15.85,
-        "lon": -87.94
+        "lon": -87.94,
+        "zoomLevel": 11
     },
     {
         "name":"Border Honduras - Guatemala",
         "lat": 15.6,
-        "lon": -88.37
+        "lon": -88.37,
+        "zoomLevel": 11
     },
     {
         "name":"Flores",
         "lat": 16.93,
-        "lon": -89.89
+        "lon": -89.89,
+        "zoomLevel": 11
     },
     {
         "name":"BelizeCity",
         "lat": 17.49,
-        "lon": -88.19
+        "lon": -88.19,
+        "zoomLevel": 11
     },
     {
         "name":"AmbergrisCaye",
         "lat": 17.92,
-        "lon": -87.96
+        "lon": -87.96,
+        "zoomLevel": 11
     },
     {
         "name":"CayeCaulker",
         "lat": 17.74,
-        "lon": -88.02
+        "lon": -88.02,
+        "zoomLevel": 11
     },
     {
         "name":"BelizeAirport",
         "lat": 17.54,
-        "lon": -88.31
+        "lon": -88.31,
+        "zoomLevel": 11
     }
 ]
