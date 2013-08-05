@@ -7,6 +7,9 @@ window.TRIP.pois = {
     POIIndex = adjustedScrollTop / POIHeight
     if POIIndex < 0 then 0 else POIIndex
 
+  firstPOI: () ->
+    TRIP.pois.list[0]
+
   currentPOI : (POIIndex,POIList) ->
     currentPOIIndexFloored = Math.floor(POIIndex)
     if currentPOIIndexFloored >= POIList.length

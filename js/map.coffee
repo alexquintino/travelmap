@@ -47,14 +47,14 @@ window.TRIP.map  = {
       .attr('stroke-width',2)
       .attr('fill-opacity',0)
 
-
+  setInitialPosition: (POI) ->
+    TRIP._map.setCenter(new google.maps.LatLng(POI.lat,POI.lon))
+    TRIP._map.setZoom(POI.zoomLevel)
 
   mapOptions : () ->
     {
-      #San Jose, Costa Rica
-#      center : new google.maps.LatLng(9.93,-84.08),
-      center : new google.maps.LatLng(50.037122,8.560538),
-      zoom: 6,
+      center : new google.maps.LatLng(0,0),
+      zoom: 1
       mapTypeId:google.maps.MapTypeId.ROADMAP,
       disableDoubleClickZoom: true,
       keyboardShortcuts: false,

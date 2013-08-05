@@ -16,6 +16,7 @@ $ ->
   TRIP.pois.loadGeoJson().done () ->
     TRIP.map.initPathOverlay()
   TRIP.pois.loadJson().done () ->
+    TRIP.map.setInitialPosition(TRIP.pois.firstPOI())
     TRIP.initDom($("#poi_container"),TRIP.pois.list)
     TRIP.initSkrollr()
 
