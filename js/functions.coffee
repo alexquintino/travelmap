@@ -32,6 +32,7 @@ window.TRIP = {
     }
 
   _scrollCallback : (props) ->
-    currentPOIIndex = TRIP.pois.calculateCurrentPOIIndex(props.curTop,TRIP.scrolling.settings)
-    TRIP.map.updatePosition(currentPOIIndex,TRIP.pois.list)
+    if TRIP.map.isReady
+      currentPOIIndex = TRIP.pois.calculateCurrentPOIIndex(props.curTop,TRIP.scrolling.settings)
+      TRIP.map.updatePosition(currentPOIIndex,TRIP.pois.list)
   }

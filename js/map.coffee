@@ -81,5 +81,10 @@ window.TRIP.map  = {
         TRIP.map.drawPaths()
     overlay.setMap(TRIP._map)
 
+  isReady: () ->
+    if TRIP._map is undefined or TRIP.map.projection is undefined
+      false
+    else
+      true
 }
 
