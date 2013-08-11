@@ -10,7 +10,6 @@ drawPOI = (poi) ->
 
 $ ->
   TRIP.scrollCallback = _.throttle(TRIP._scrollCallback,20)
-  TRIP.map.setProjection = _.once(TRIP.map._setProjection)
 
   TRIP.map.init $("#map_canvas")[0]
   TRIP.pois.loadGeoJson().done () ->

@@ -30,7 +30,7 @@ window.TRIP.map  = {
   init : (mapElem) ->
     TRIP._map = new google.maps.Map(mapElem,@mapOptions())
 
-  _setProjection : (overlayProjection) ->
+  setProjection : (overlayProjection) ->
     TRIP.map.projection = (coordinates) ->
       googleCoordinates = new google.maps.LatLng(coordinates[1], coordinates[0])
       pixelCoordinates = overlayProjection.fromLatLngToDivPixel(googleCoordinates)
