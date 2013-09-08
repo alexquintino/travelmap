@@ -161,10 +161,10 @@ html, body {
 
 .SvgOverlay svg {
     position: absolute;
-    top: -4000px;
-    left: -4000px;
-    width: 8000px;
-    height: 8000px;
+    top: -5000000px;
+    left: -5000000px;
+    width: 10000000px;
+    height: 10000000px;
 }
 
 

@@ -34,7 +34,7 @@ window.TRIP.map  = {
     TRIP.map.projection = (coordinates) ->
       googleCoordinates = new google.maps.LatLng(coordinates[1], coordinates[0])
       pixelCoordinates = overlayProjection.fromLatLngToDivPixel(googleCoordinates)
-      return [pixelCoordinates.x + 4000, pixelCoordinates.y + 4000]
+      return [pixelCoordinates.x + 5000000, pixelCoordinates.y + 5000000]
     d3.geo.path().projection(TRIP.map.projection)
 
   drawPaths: () ->
