@@ -15,11 +15,12 @@ window.TRIP = {
       label = poi.name
       startHeight = count * windowHeight
       endHeight = startHeight + windowHeight
-      heights = {startHeight:startHeight, endHeight:endHeight}
+      disappearHeight = endHeight + 200
+      heights = {startHeight:startHeight, endHeight:endHeight, disappearHeight: disappearHeight}
 
       innerDiv = _.template("<div class=\"poi-label\"><h1><%= label %></h1></div>",{label: label})
 
-      outerDivData = _.template("data-<%=startHeight%>=\"opacity:0\" data-<%= endHeight %>=\"opacity:1\"",heights)
+      outerDivData = _.template("data-<%=startHeight%>=\"opacity:0\" data-<%= endHeight %>=\"opacity:1\" data-<%= disappearHeight %>=\"opacity:0\"",heights)
       html = _.template("<div class=\"poi\" <%=outerDivData%> ><%= innerDiv %></div>",{innerDiv: innerDiv, outerDivData:outerDivData})
       element.append(html);
       count += 1
