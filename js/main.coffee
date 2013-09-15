@@ -11,7 +11,9 @@ drawPOI = (poi) ->
 $ ->
   TRIP.scrollCallback = _.throttle(TRIP._scrollCallback,20)
 
+
   TRIP.map.init $("#map_canvas")[0]
+  TRIP.map.loadMapStyles()
   TRIP.pois.loadGeoJson().done () ->
     TRIP.map.initPathOverlay()
   TRIP.pois.loadJson().done () ->

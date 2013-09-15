@@ -62,7 +62,13 @@ window.TRIP.map  = {
       disableDefaultUI: true,
       draggable: false,
       scrollwheel: false,
+#      styles: TRIP.map.styles,
     }
+
+  loadMapStyles : () ->
+    $.getJSON("/map_styles.json", (data) ->
+      TRIP._map.setOptions({styles:data})
+    )
 
   initPathOverlay: () ->
     overlay = new google.maps.OverlayView()
