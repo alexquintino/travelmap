@@ -94,6 +94,7 @@ textarea {
    ========================================================================== */
 
 html, body {
+    height: 100%;
     width: 100%;
     margin:0;
     padding: 0;
@@ -147,16 +148,15 @@ html, body {
     height: 100%;
 }
 
+.poi {
+    width: 400px;
+}
 
 .poi-label {
+    text-align: center;
     padding: 2em;
     background-color: #222222;
     color: white;
-}
-
-.poi {
-    clear:both;
-    float: left;
 }
 
 .SvgOverlay svg {
