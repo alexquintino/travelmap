@@ -18,7 +18,7 @@
         "zoomLevel": 5
     },
     {
-        "name": "San Jose",
+        "name": "San José",
         "lon": -84.08,
         "lat": 9.93,
         "zoomLevel": 11
@@ -35,7 +35,7 @@
         "lat": 10.299,
         "zoomLevel": 11
     },
-    {   "name":"PenasBlancas",
+    {   "name":"Peñas Blancas",
         "lat": 11.22,
         "lon": -85.61,
         "zoomLevel": 11
@@ -75,25 +75,25 @@
         "zoomLevel": 11
     },
     {
-        "name":"LaCeiba",
+        "name":"La Ceiba",
         "lat": 15.77,
         "lon": -86.79,
         "zoomLevel": 11
     },
     {
-        "name":"Utila",
+        "name":"Útila",
         "lat": 16.1,
         "lon": -86.89,
         "zoomLevel": 11
     },
     {
-        "name":"SanPedroSula",
+        "name":"San Pedro Sula",
         "lat": 15.5,
         "lon": -88.02,
         "zoomLevel": 11
     },
     {
-        "name":"PuertoCortes",
+        "name":"Puerto Cortés",
         "lat": 15.85,
         "lon": -87.94,
         "zoomLevel": 11
@@ -111,25 +111,25 @@
         "zoomLevel": 11
     },
     {
-        "name":"BelizeCity",
+        "name":"Belize City",
         "lat": 17.49,
         "lon": -88.19,
         "zoomLevel": 11
     },
     {
-        "name":"AmbergrisCaye",
+        "name":"Ambergris Caye",
         "lat": 17.92,
         "lon": -87.96,
         "zoomLevel": 11
     },
     {
-        "name":"CayeCaulker",
+        "name":"Caye Caulker",
         "lat": 17.74,
         "lon": -88.02,
         "zoomLevel": 11
     },
     {
-        "name":"BelizeAirport",
+        "name":"Belize Airport",
         "lat": 17.54,
         "lon": -88.31,
         "zoomLevel": 11
