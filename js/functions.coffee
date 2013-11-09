@@ -8,22 +8,28 @@ window.TRIP = {
     windowHeight = $(window).height()
     $("#start").attr("data-0","opacity:1")
     $("#start").attr("data-"+windowHeight,"opacity:0")
+    template = Mustache.compile $("#poi-template").html()
 
-    count = 1
-
-    _.each pois_list, (poi) ->
+    _.each pois_list, (poi,index) ->
       label = poi.name
-      startHeight = count * windowHeight
-      endHeight = startHeight + windowHeight
-      disappearHeight = endHeight + 200
-      heights = {startHeight:startHeight, endHeight:endHeight, disappearHeight: disappearHeight}
+      heights = TRIP.calculateHeights(windowHeight,index)
+      templateData = { heights: heights, label: label}
+      element.append(template(templateData));
 
-      innerDiv = _.template("<div class=\"poi-label\"><h1><%= label %></h1></div>",{label: label})
+  calculateHeights : (windowHeight,index) ->
+    start = @startHeight(windowHeight,index)
+    end = @endHeight(windowHeight,start)
+    disappear = @disappearHeight(end)
+    {start: start, end: end, disappear: disappear}    
 
-      outerDivData = _.template("data-<%=startHeight%>=\"opacity:0\" data-<%= endHeight %>=\"opacity:1\" data-<%= disappearHeight %>=\"opacity:0\"",heights)
-      html = _.template("<div class=\"poi\" <%=outerDivData%> ><%= innerDiv %></div>",{innerDiv: innerDiv, outerDivData:outerDivData})
-      element.append(html);
-      count += 1
+  startHeight : (windowHeight,index) ->
+    index * windowHeight
+
+  endHeight : (windowHeight, startHeight) ->
+    startHeight + windowHeight
+
+  disappearHeight : (endHeight) ->
+    endHeight + 200
 
   initSkrollr : () ->
     TRIP.scrolling.skrollr = skrollr.init {

@@ -15,6 +15,15 @@
         <link rel="stylesheet" href="css/main.css">
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
         <script src="js/vendor/modernizr-2.6.2.min.js"></script>
+        <script id="poi-template" type="text/html">
+            <div class="poi" data-{{heights.start}}="opacity:0"
+                             data-{{heights.end}}="opacity:1"
+                             data-{{heights.disappear}}="opacity:0"\>
+                <div class="poi-label">
+                    <h1>{{ label }}</h1>
+                </div>
+            </div>
+        </script>
     </head>
     <body>
         <!--[if lt IE 7]>
@@ -48,7 +57,7 @@
         </div>
 
 
-        
+        <script src="js/vendor/mustache.js"></script>
         <script src="js/functions.js"></script>
         <script src="js/pois.js"></script>
         <script src="js/map.js"></script>
