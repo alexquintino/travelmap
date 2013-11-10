@@ -1,6 +1,4 @@
 window.TRIP.map  = {
-  minZoomLevel : 4
-  maxZoomLevel : 10
 
   updatePosition : (curPOIIndex,POIsList) ->
     if curPOIIndex >= 1 and curPOIIndex < POIsList.length
