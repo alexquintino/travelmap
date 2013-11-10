@@ -2,7 +2,7 @@ window.TRIP = {} if typeof(window.TRIP) is 'undefined'
 
 window.TRIP._vars = {
     scrolling :
-      startingPoint : $(window).height()*1.5
+      startingPoint : Math.round($(window).height()*1.5)
       POIHeight : $(window).height()
 }
 
