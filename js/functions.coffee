@@ -18,7 +18,7 @@ window.TRIP.functions = {
     {start: start, end: end, disappear: disappear}    
 
   startHeight : (index) ->
-    index * TRIP._vars.scrolling.POIHeight
+    index * TRIP._vars.scrolling.POIHeight + TRIP._vars.scrolling.startingPoint
 
   endHeight : (startHeight) ->
     startHeight + TRIP._vars.scrolling.POIHeight

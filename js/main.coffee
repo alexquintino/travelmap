@@ -2,9 +2,8 @@ window.TRIP = {} if typeof(window.TRIP) is 'undefined'
 
 window.TRIP._vars = {
     scrolling :
-      startingPoint : 0
-      POIHeight : 0
-    windowHeight : 0
+      startingPoint : $(window).height()*1.5
+      POIHeight : $(window).height()
 }
 
 drawPOI = (poi) ->
@@ -17,9 +16,6 @@ drawPOI = (poi) ->
 
 $ ->
   TRIP.scrollCallback = _.throttle(TRIP.functions.scrollCallback,20)
-  height = $(window).height()
-  TRIP._vars.scrolling.startingPoint = 0
-  TRIP._vars.scrolling.POIHeight = height
 
   TRIP.map.init $("#map_canvas")[0]
   TRIP.map.loadMapStyles()
